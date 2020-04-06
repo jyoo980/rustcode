@@ -89,6 +89,31 @@ fn two_sum(arr: Vec<i32>, target: i32) -> (i32, i32) {
     panic!("{:?} failed to contain elements that sum up to: {}", arr, target)
 }
 
+// https://leetcode.com/problems/find-all-duplicates-in-an-array/
+fn find_duplicates(arr: Vec<i32>) -> Vec<i32> {
+    let freq = arr.iter().fold(HashMap::new(), |mut acc, n| {
+        *acc.entry(*n).or_insert(0) += 1;
+        acc
+    });
+    freq.iter().filter(|&(_, v)| *v != 1)
+        .map(|(k, _)| *k)
+        .collect()
+}
+
+// https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/
+// TODO: revisit this later, definitely not the nicest way to do it
+fn smaller_numbers_than_current(nums: Vec<i32>) -> Vec<i32> {
+    nums.iter().enumerate()
+        .map(|(i, n)| {
+            nums.iter().enumerate().filter(|&(j, x)| i != j && *x < *n)
+                .map(|(_, _)| 1)
+                .collect::<Vec<i32>>()
+                .iter()
+                .sum()
+        })
+        .collect()
+}
+
 fn main() {
     println!("Test...test");
 }
