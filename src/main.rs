@@ -52,6 +52,43 @@ fn char_map(s: &str) -> HashMap<char, i32> {
     })
 }
 
+// https://leetcode.com/problems/find-lucky-integer-in-an-array/
+fn find_lucky(arr: Vec<i32>) -> i32 {
+    let map = arr.iter().fold(HashMap::new(), |mut acc, n| {
+        *acc.entry(*n).or_insert(0) += 1;
+        acc
+    });
+    let lucky_nums: Vec<i32> = map.iter()
+        .filter(|&(k, v)| *k == *v)
+        .map(|(k, _)| *k)
+        .collect();
+    if lucky_nums.len() > 0 {
+        match lucky_nums.iter().max() {
+            Some(max) => *max,
+            None => panic!("should not have gotten here")
+        }
+    } else {
+        -1
+    }
+}
+
+// https://leetcode.com/problems/two-sum/
+fn two_sum(arr: Vec<i32>, target: i32) -> (i32, i32) {
+    let mut diff_index = HashMap::new();
+    for (i, n) in arr.iter().enumerate() {
+        diff_index.insert(target - *n, i);
+    }
+    for (i, n) in arr.iter().enumerate() {
+        if diff_index.contains_key(&n) {
+            return match diff_index.get(&n) {
+                Some(j) => (i as i32, *j as i32),
+                None => panic!("should not have gotten here")
+            }
+        }
+    }
+    panic!("{:?} failed to contain elements that sum up to: {}", arr, target)
+}
+
 fn main() {
     println!("Test...test");
 }
