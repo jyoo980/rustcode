@@ -114,6 +114,18 @@ fn smaller_numbers_than_current(nums: Vec<i32>) -> Vec<i32> {
         .collect()
 }
 
+fn other_majority_element(nums: Vec<i32>) -> Vec<i32> {
+    let threshold = (nums.len() / 3) as i32;
+    let freqs = nums.iter().fold(HashMap::new(), |mut acc, n| {
+        *acc.entry(n).or_insert(0) += 1;
+        acc
+    });
+    freqs.iter()
+        .filter(|&(_, v)| *v > threshold)
+        .map(|(k, v)| **k)
+        .collect()
+}
+
 fn main() {
     println!("Test...test");
 }
