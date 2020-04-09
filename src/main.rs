@@ -123,8 +123,25 @@ fn other_majority_element(nums: Vec<i32>) -> Vec<i32> {
     });
     freqs.iter()
         .filter(|&(_, v)| *v > threshold)
-        .map(|(k, v)| **k)
+        .map(|(k, _)| **k)
         .collect()
+}
+
+fn single_number(nums: Vec<i32>) -> i32 {
+    if nums.len() == 1 {
+        nums[0]
+    } else {
+        let freqs = nums.iter().fold(HashMap::new(), |mut acc, n| {
+            *acc.entry(n).or_insert(0) += 1;
+            acc
+        });
+        match freqs.iter().find(|&(_, v)| *v == 1) {
+            Some(entry) => match entry {
+                (k, _) => **k
+            },
+            None => panic!("Single element does not exist in {:?}", nums)
+        }
+    }
 }
 
 fn main() {
