@@ -144,6 +144,13 @@ fn single_number(nums: Vec<i32>) -> i32 {
     }
 }
 
+fn count_elements(arr: Vec<i32>) -> i32 {
+    arr.iter()
+        .filter(|x| arr.contains(&(*x + 1)))
+        .map(|_| 1)
+        .sum()
+}
+
 fn main() {
     println!("Test...test");
 }
