@@ -151,6 +151,18 @@ fn count_elements(arr: Vec<i32>) -> i32 {
         .sum()
 }
 
+// https://leetcode.com/problems/perfect-number/
+fn check_perfect_number(num: i32) -> bool {
+    if num != 0 {
+        num == (1 .. num - 1).collect::<Vec<i32>>()
+            .iter()
+            .filter(|n| num % **n == 0)
+            .sum()
+    } else {
+        false
+    }
+}
+
 fn main() {
     println!("Test...test");
 }
